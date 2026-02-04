@@ -1,8 +1,3 @@
-Nice project idea — this is exactly how people *actually* learn Docker 👌
-I’ll write a **clear, beginner-friendly README** that explains the goal, learning outcomes, and the task (containerize services + docker-compose). You can drop this straight into your repo.
-
----
-
 # 🐳 Docker Lab – Learn Docker by Doing
 
 Welcome to **Docker Lab** 🎉
