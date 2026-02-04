@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Future Products ✦ Gen-Z UI</title>
+
+<style>
+:root {
+  --bg: #050510;
+  --glass: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.18);
+  --neon1: #7f5cff;
+  --neon2: #00ffd5;
+  --neon3: #ff4ecd;
+  --text: #fff;
+  --muted: #a5a5c5;
+}
+
+* { box-sizing: border-box; font-family: Inter, system-ui, sans-serif; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #0c0c2a, var(--bg));
+  color: var(--text);
+  overflow: hidden;
+}
+
+/* floating background orbs */
+.orb {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.55;
+  animation: float 18s infinite alternate ease-in-out;
+}
+.orb.one { background: var(--neon1); top:-120px; left:-120px; }
+.orb.two { background: var(--neon2); bottom:-140px; right:-140px; animation-delay:4s;}
+.orb.three { background: var(--neon3); top:40%; right:-180px; animation-delay:8s;}
+
+@keyframes float {
+  to { transform: translate(60px,-60px); }
+}
+
+/* center card */
+.app {
+  position: relative;
+  z-index: 2;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  width: 420px;
+  padding: 2.5rem;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04));
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  box-shadow: 0 0 60px rgba(0,0,0,0.5);
+}
+
+h2 {
+  margin-bottom: 1.5rem;
+  background: linear-gradient(90deg,var(--neon1),var(--neon3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.3);
+  color: white;
+}
+
+button {
+  width: 100%;
+  padding: 0.9rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  background: linear-gradient(90deg,var(--neon1),var(--neon3));
+  color: white;
+  box-shadow: 0 0 20px rgba(127,92,255,0.5);
+}
+
+button:hover { transform: scale(1.04); }
+
+.link {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.hidden { display: none; }
+
+/* dashboard */
+.dashboard {
+  width: 100%;
+  height: 100vh;
+  padding: 2rem;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bubble-area {
+  position: relative;
+  height: calc(100vh - 160px);
+  margin-top: 2rem;
+  overflow: hidden;
+}
+
+.bubble {
+  position: absolute;
+  padding: 1rem 1.4rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg,var(--neon2),var(--neon3));
+  color: #000;
+  font-weight: 600;
+  animation: bubbleFloat 12s infinite ease-in-out;
+  box-shadow: 0 0 25px rgba(0,255,213,0.6);
+}
+
+@keyframes bubbleFloat {
+  0% { transform: translateY(0); opacity: 0.9; }
+  50% { transform: translateY(-120px); }
+  100% { transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="orb one"></div>
+<div class="orb two"></div>
+<div class="orb three"></div>
+
+<div class="app">
+
+<!-- LOGIN -->
+<div class="card" id="loginView">
+  <h2>Login</h2>
+  <input id="loginUser" placeholder="username">
+  <input id="loginPass" type="password" placeholder="password">
+  <button onclick="login()">Login</button>
+  <div class="link" onclick="showRegister()">No account? Register →</div>
+  <p id="loginMsg"></p>
+</div>
+
+<!-- REGISTER -->
+<div class="card hidden" id="registerView">
+  <h2>Register</h2>
+  <input id="regUser" placeholder="username">
+  <input id="regPass" type="password" placeholder="password">
+  <button onclick="register()">Create Account</button>
+  <div class="link" onclick="showLogin()">← Back to Login</div>
+  <p id="regMsg"></p>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard hidden" id="dashboardView">
+  <div class="top">
+    <h2>Your Products</h2>
+    <button style="width:auto;padding:0.6rem 1.4rem" onclick="logout()">Logout</button>
+  </div>
+
+  <input id="productName" placeholder="Add new product">
+  <button onclick="addProduct()">Add Product</button>
+
+  <div class="bubble-area" id="bubbleArea"></div>
+</div>
+
+</div>
+
+<script>
+const API_AUTH = "http://localhost:4000";
+const API_PRODUCTS = "http://localhost:5000";
+
+const token = () => localStorage.getItem("token");
+
+/* view switching */
+function showLogin(){ loginView.classList.remove("hidden"); registerView.classList.add("hidden"); }
+function showRegister(){ registerView.classList.remove("hidden"); loginView.classList.add("hidden"); }
+
+/* auth */
+async function register(){
+  const res = await fetch(API_AUTH + "/register", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ username: regUser.value, password: regPass.value })
+  });
+  if(!res.ok){ regMsg.innerText="Registration failed"; return; }
+  showLogin();
+}
+
+async function login(){
+  const res = await fetch(API_AUTH + "/login", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ username: loginUser.value, password: loginPass.value })
+  });
+  if(!res.ok){ loginMsg.innerText="Login failed"; return; }
+  const data = await res.json();
+  localStorage.setItem("token", data.token);
+  loadDashboard();
+}
+
+function logout(){
+  localStorage.removeItem("token");
+  location.reload();
+}
+
+/* dashboard */
+async function loadDashboard(){
+  loginView.classList.add("hidden");
+  registerView.classList.add("hidden");
+  dashboardView.classList.remove("hidden");
+  loadProducts();
+}
+
+async function loadProducts(){
+  const res = await fetch(API_PRODUCTS + "/products", {
+    headers:{ Authorization:"Bearer "+token() }
+  });
+  if(res.status === 401){ logout(); return; }
+  const data = await res.json();
+  bubbleArea.innerHTML = "";
+  data.forEach(p => spawnBubble(p.name));
+}
+
+async function addProduct(){
+  await fetch(API_PRODUCTS + "/products", {
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json",
+      Authorization:"Bearer "+token()
+    },
+    body: JSON.stringify({ name: productName.value })
+  });
+  productName.value="";
+  loadProducts();
+}
+
+/* bubbles */
+function spawnBubble(text){
+  const b = document.createElement("div");
+  b.className = "bubble";
+  b.innerText = text;
+  b.style.left = Math.random()*80 + "%";
+  b.style.top = Math.random()*70 + "%";
+  b.style.animationDuration = 10 + Math.random()*10 + "s";
+  bubbleArea.appendChild(b);
+}
+
+/* auto boot */
+if(token()) loadDashboard();
+</script>
+
+</body>
+</html>
