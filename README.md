@@ -18,7 +18,7 @@ Your task is to:
 By the end, you should be able to start the full app using:
 
 ```bash
-docker compose up
+docker compose up -d
 ```
 
 
