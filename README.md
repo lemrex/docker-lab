@@ -165,7 +165,6 @@ This file should:
 Example:
 
 ```yaml
-version: "3.9"
 
 services:
   backend:
