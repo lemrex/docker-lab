@@ -65,7 +65,47 @@ Each service should eventually have its own:
 Dockerfile
 ```
 
+## 🧩 About Application
 
+<img width="1902" height="1064" alt="image" src="https://github.com/user-attachments/assets/0303d7c0-0399-49e1-9aa5-714becb70729" />
+
+
+This demo application is a **simple multi-service web application** built intentionally for **learning Docker and containerization concepts**.
+
+The app is **not about complex business logic** — it is designed to simulate a **real-world microservices setup** where multiple services must work together to deliver a complete application.
+
+
+## 🏗️ Architecture at a Glance
+
+The application consists of **multiple independent services**, such as:
+
+* A **frontend service** that provides the user interface
+* Authentication Service for handling registration and login
+* Product API service for managing product
+* Supporting services like databases
+
+Each service:
+
+* Can run independently
+* Uses its own runtime and dependencies
+* Communicates with other services over the network
+
+This makes the app ideal for learning how Docker handles:
+
+* Service isolation
+* Networking between containers
+* Environment configuration
+* Orchestration using Docker Compose
+
+
+## 🔍 Why This App Works Well for Learning Docker
+
+* ✅ Multiple services (realistic setup)
+* ✅ Clear separation of concerns
+* ✅ Easy to containerize incrementally
+* ✅ Ideal for experimenting, breaking, and fixing
+
+By containerizing this app, learners gain practical experience they can directly apply to real-world DevOps and cloud projects.
 
 ## 🛠️ Tasks
 
@@ -141,7 +181,7 @@ services:
       - backend
 ```
 
-## Some Hints
+## 🔍 Some Hints
 * The application requires a postgreSQL database
 * Use any Webserver of your choice to host the frontend
 * Use environment variables 
