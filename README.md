@@ -5,7 +5,7 @@ This project is designed to help you **learn Docker, Dockerfiles, and Docker Com
 
 Instead of abstract examples, you’ll work with a **real multi-service application** and containerize it step by step.
 
----
+
 
 ## 🎯 Objective
 
@@ -21,7 +21,7 @@ By the end, you should be able to start the full app using:
 docker compose up
 ```
 
----
+
 
 ## 🧠 What You’ll Learn
 
@@ -34,7 +34,7 @@ This lab will help you understand:
 * Environment variables and service dependencies
 * Port mapping and volumes (where applicable)
 
----
+
 
 ## 📁 Project Structure
 
@@ -65,7 +65,7 @@ Each service should eventually have its own:
 Dockerfile
 ```
 
----
+
 
 ## 🛠️ Tasks
 
@@ -79,7 +79,7 @@ Dockerfile
   * Dependencies (DB, API, other services)
   * Runtime (Node.js, Python, etc.)
 
----
+
 
 ### 2️⃣ Create Dockerfiles
 
@@ -104,7 +104,7 @@ EXPOSE 3000
 CMD ["npm", "start"]
 ```
 
----
+
 
 ### 3️⃣ Create a Docker Compose File
 
@@ -141,7 +141,7 @@ services:
       - backend
 ```
 
----
+
 
 ## ▶️ Running the Application
 
@@ -157,7 +157,7 @@ To stop everything:
 docker compose down
 ```
 
----
+
 
 ## 🧪 Validation Checklist
 
@@ -168,7 +168,7 @@ Before considering the task complete, confirm that:
 * ✅ The application works as expected
 * ✅ No service requires manual startup outside Docker
 
----
+
 
 ## 🚀 Stretch Goals (Optional)
 
@@ -180,7 +180,7 @@ If you want to go further:
 * Optimize Docker image size
 * Add health checks
 
----
+
 
 ## 📌 Who This Is For
 
@@ -188,20 +188,16 @@ If you want to go further:
 * Developers transitioning to DevOps / Cloud
 * Anyone who prefers **learning by building**
 
----
+
 
 ## 🧑‍💻 Author
 
 Built by **Raphael**
 GitHub: [https://github.com/lemrex](https://github.com/lemrex)
 
----
 
-If you want, next we can:
 
-* Add **guided hints per service**
-* Turn this into a **step-by-step workshop**
-* Create **solutions on a separate branch**
+
 * Add **Docker interview challenges** based on this lab
 
 Just say the word 🚀
