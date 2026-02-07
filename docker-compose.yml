@@ -55,20 +55,20 @@ services:
     volumes:
       - ./db/migrations:/migrations
     entrypoint: >
-      bash -c "
-      for f in /migrations/*.sql; do
-        echo Running
+  bash -c "
+  for f in /migrations/*.sql; do
+    echo Running 
 $$
 f;
-        psql -h db -U 
+    psql -h db -U
 $$
-POSTGRES_USER -d
+POSTGRES_USER -d 
 $$
-POSTGRES_DB -f 
+POSTGRES_DB -f
 $$
 f;
-      done
-      "
+  done
+  "
 
 volumes: 
   postgres_data:
