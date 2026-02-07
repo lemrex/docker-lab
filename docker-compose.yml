@@ -54,21 +54,8 @@ services:
         condition: service_healthy
     volumes:
       - ./db/migrations:/migrations
-    entrypoint: >
-  bash -c "
-  for f in /migrations/*.sql; do
-    echo Running 
-$$
-f;
-    psql -h db -U
-$$
-POSTGRES_USER -d 
-$$
-POSTGRES_DB -f
-$$
-f;
-  done
-  "
+      - ./db/migrate.sh:/migrate.sh
+    command: ["sh", "/migrate.sh"]
 
 volumes: 
   postgres_data:
