@@ -2,5 +2,7 @@ CREATE TABLE IF NOT EXISTS products (
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL,
   price NUMERIC NOT NULL,
-  user_id INTEGER REFERENCES users(id)
+  user_id INTEGER NOT NULL
+    REFERENCES users(id)
+    ON DELETE CASCADE
 );
